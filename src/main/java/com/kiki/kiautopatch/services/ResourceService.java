@@ -1,8 +1,9 @@
 package com.kiki.kiautopatch.services;
 
-import com.kiki.kiautopatch.utils.HttpUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kiki.kiautopatch.KiAutoPatch;
+import com.kiki.kiautopatch.utils.HttpUtil;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
@@ -10,15 +11,17 @@ import net.minecraft.client.toast.ToastManager;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ResourceService {
-    private static final String API_URL = "http://127.0.0.1:8000/api/resources/mc/resource_pack";
-    private static final String PACK_PREFIX = "NeoTccResourcepack-";
-    private static final Pattern VERSION_PATTERN = Pattern.compile(PACK_PREFIX + "(\\d+(?:\\.\\d+)*)\\.zip");
+    private static final String apiUrl = KiAutoPatch.config.apiUrl;
+    private static final String resourcePackName = KiAutoPatch.config.resourcePackName;
+    private static final Pattern versionPattern = Pattern.compile(resourcePackName + "(\\d+(?:\\.\\d+)*)\\.zip");
     private static boolean hasChecked = false;
 
     /** 检查并更新资源包（仅执行一次），通过 Toast 显示结果 */
@@ -27,7 +30,7 @@ public class ResourceService {
         hasChecked = true;
 
         try {
-            String json = HttpUtil.getString(API_URL);
+            String json = HttpUtil.getString(apiUrl);
             JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
             String remoteVer = obj.get("version").getAsString();
             String downloadUrl = obj.get("download_url").getAsString();
@@ -36,9 +39,9 @@ public class ResourceService {
                     .getGameDir().resolve("resourcepacks");
 
             Optional<String> localVer = Optional.empty();
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(packDir, PACK_PREFIX + "*.zip")) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(packDir, resourcePackName + "*.zip")) {
                 for (Path p : stream) {
-                    Matcher m = VERSION_PATTERN.matcher(p.getFileName().toString());
+                    Matcher m = versionPattern.matcher(p.getFileName().toString());
                     if (m.matches()) {
                         String v = m.group(1);
                         localVer = localVer.isEmpty() ? Optional.of(v) : Optional.of(maxVersion(localVer.get(), v));
@@ -62,14 +65,13 @@ public class ResourceService {
                 }
             }
 
-            showToast(client, updated
-                            ? "[KiAutoPatch] 已更新至 " + resultVer
-                            : "[KiAutoPatch] 已是最新版本：" + resultVer,
-                    updated);
+            if (updated) {
+                showToast(client, "[KiAutoPatch] 已将 [NeoTccResourcepack] 更新至 " + resultVer, true);
+            }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            showToast(client, "[KiAutoPatch] 更新失败，错误码: -1", false);
+            showToast(client, "[KiAutoPatch] 更新失败,错误码: -1", false);
         }
     }
 
@@ -77,20 +79,19 @@ public class ResourceService {
         ToastManager tm = client.getToastManager();
         tm.add(SystemToast.create(
                 client,
-                success ? SystemToast.Type.NARRATOR_TOGGLE : SystemToast.Type.WORLD_BACKUP,
+                SystemToast.Type.PERIODIC_NOTIFICATION,
                 Text.of(message),
                 Text.empty()
         ));
     }
 
     private static void downloadNew(String url, String version, Path dir) throws IOException, InterruptedException {
-        Path target = dir.resolve(PACK_PREFIX + version + ".zip");
+        Path target = dir.resolve(resourcePackName + version + ".zip");
         HttpUtil.downloadTo(url, target);
-        System.out.println("[KiAutoPatch] 已下载资源包版本 " + version);
     }
 
     private static void deleteLocalPacks(Path dir) throws IOException {
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, PACK_PREFIX + "*.zip")) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, resourcePackName + "*.zip")) {
             for (Path p : stream) Files.deleteIfExists(p);
         }
     }
