@@ -12,8 +12,7 @@ public class ModConfig {
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("kiautopatch.json");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public String apiUrl = "http://127.0.0.1:8000/api/resources/mc/resource_pack";
-    public String resourcePackName = "NeoTccResourcepack";
+    public String apiUrl = "http://127.0.0.1:8000/api/resources/mc/latest_all";
 
     public static ModConfig load() {
         if (Files.exists(CONFIG_PATH)) {
