@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.logging.*;
 
 public class KiAutoPatchLogger {
-    // 获取或创建 Logger
     private static final Logger LOGGER = Logger.getLogger("KiAutoPatch");
     static {
         try {
@@ -21,7 +20,7 @@ public class KiAutoPatchLogger {
                 Files.createDirectories(logDir);
             }
 
-            // 日志文件模式：kiautopatch-0.log, kiautopatch-1.log...
+            // 日志文件模式
             String pattern = logDir.resolve("kiautopatch-%g.log").toString();
             // 限制单文件 10MB，最多 5 个轮转文件，append 模式
             FileHandler fh = new FileHandler(pattern, 10 * 1024 * 1024, 5, true);

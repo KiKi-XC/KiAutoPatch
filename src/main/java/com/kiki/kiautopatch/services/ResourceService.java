@@ -28,7 +28,9 @@ public class ResourceService {
         hasChecked = true;
 
         Path packDir = FabricLoader.getInstance().getGameDir().resolve("resourcepacks");
+        if (KiAutoPatch.config.eulaAccepted  ){
 
+        }
         try {
             KiAutoPatchLogger.info("[KiAutoPatch] 开始检查更新");
             String json = HttpUtil.getString(apiUrl);
@@ -96,10 +98,9 @@ public class ResourceService {
                 }
 
                 if (updated) {
-                    KiAutoPatchLogger.info("[KiAutoPatch] 已将 [" + packName + "] 更新至 " + remoteVer);
                     showToast(client, "[KiAutoPatch] 已将 [" + packName + "] 更新至 " + remoteVer, true);
+                    KiAutoPatchLogger.info("[KiAutoPatch] 已将 [" + packName + "] 更新至 " + remoteVer);
                 }
-                KiAutoPatchLogger.info("[KiAutoPatch] 更新完成");
             }
 
         } catch (Exception e) {
@@ -147,7 +148,6 @@ public class ResourceService {
         return 0;
     }
 
-    /** 计算文件的 MD5，并与期望值对比 */
     private static boolean checkMD5(Path file, String expectedMd5) throws IOException {
         try {
             byte[] fileBytes = Files.readAllBytes(file);
@@ -159,7 +159,7 @@ public class ResourceService {
             }
             return sb.toString().equalsIgnoreCase(expectedMd5);
         } catch (Exception e) {
-            e.printStackTrace();
+            KiAutoPatchLogger.error("[KiAutoPatch] MD5校验失败", e);
             return false;
         }
     }

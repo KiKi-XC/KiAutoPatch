@@ -2,6 +2,7 @@ package com.kiki.kiautopatch.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kiki.kiautopatch.utils.KiAutoPatchLogger;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.*;
@@ -13,13 +14,14 @@ public class ModConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public String apiUrl = "http://127.0.0.1:8000/api/resources/mc/latest_all";
+    public boolean eulaAccepted = false;
 
     public static ModConfig load() {
         if (Files.exists(CONFIG_PATH)) {
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
                 return GSON.fromJson(reader, ModConfig.class);
             } catch (IOException e) {
-                e.printStackTrace();
+                KiAutoPatchLogger.error("[KiAutoPatch] 读取配置失败", e);
             }
         }
 
@@ -31,7 +33,7 @@ public class ModConfig {
                 GSON.toJson(defaultConfig, writer);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            KiAutoPatchLogger.error("[KiAutoPatch] 写入配置失败", e);
         }
 
         return defaultConfig;
@@ -41,7 +43,7 @@ public class ModConfig {
         try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {
             GSON.toJson(this, writer);
         } catch (IOException e) {
-            e.printStackTrace();
+            KiAutoPatchLogger.error("[KiAutoPatch] 保存配置失败", e);
         }
     }
 }

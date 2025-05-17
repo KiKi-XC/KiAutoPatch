@@ -15,7 +15,6 @@ public class HttpUtil {
             .version(HttpClient.Version.HTTP_1_1)
             .build();
 
-    /** 发起 GET 请求并返回字符串 */
     public static String getString(String url) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -26,7 +25,6 @@ public class HttpUtil {
         return CLIENT.send(req, HttpResponse.BodyHandlers.ofString()).body();
     }
 
-    /** 下载二进制内容到目标文件 */
     public static void downloadTo(String url, Path target) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url))
