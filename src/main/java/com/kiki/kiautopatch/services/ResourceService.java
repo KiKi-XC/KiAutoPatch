@@ -1,9 +1,10 @@
 package com.kiki.kiautopatch.services;
 
-import com.google.gson.*;
-import com.kiki.kiautopatch.KiAutoPatch;
-import com.kiki.kiautopatch.config.ConfigUtils;
-import com.kiki.kiautopatch.config.ModConfig;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.kiki.kiautopatch.config.ModConfigUtils;
 import com.kiki.kiautopatch.utils.HttpUtil;
 import com.kiki.kiautopatch.utils.KiAutoPatchLogger;
 import net.fabricmc.loader.api.FabricLoader;
@@ -13,15 +14,15 @@ import net.minecraft.client.toast.ToastManager;
 import net.minecraft.text.Text;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ResourceService {
-    static ModConfig cfg = ConfigUtils.get();
-
     private static boolean hasChecked = false;
 
     /** 入口：检查并更新所有资源包 */
@@ -33,7 +34,7 @@ public class ResourceService {
 
         try {
             KiAutoPatchLogger.info("[KiAutoPatch] 开始检查更新");
-            String json = HttpUtil.getString(cfg.apiUrl);
+            String json = HttpUtil.getString(ModConfigUtils.get().getResolvedUrl());
             JsonObject rootObj = JsonParser.parseString(json).getAsJsonObject();
 
             if (!"OK".equals(rootObj.get("status").getAsString())) {

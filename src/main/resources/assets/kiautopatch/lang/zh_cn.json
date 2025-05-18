@@ -1,6 +1,9 @@
 {
-  "text.autoconfig.kiautopatch.option.apiUrl":         "资源接口地址",
-  "text.autoconfig.kiautopatch.option.apiUrl.@Tooltip": "用于拉取最新资源列表的接口地址",
-  "text.autoconfig.kiautopatch.option.eulaAccepted":   "已接受 EULA 协议",
-  "text.autoconfig.kiautopatch.option.eulaAccepted.@Tooltip": "阅读并同意最终用户许可协议后才能继续"
+  "text.autoconfig.kiautopatch.title": "KiAutoPatch 设置页",
+  "text.autoconfig.kiautopatch.urlOption":         "资源接口地址",
+  "text.autoconfig.kiautopatch.urlOption.@Tooltip": "用于拉取最新资源列表的接口地址",
+  "text.autoconfig.kiautopatch.eulaAccepted":   "已接受 EULA 协议",
+  "text.autoconfig.kiautopatch.eulaAccepted.@Tooltip": "阅读并同意最终用户许可协议后才能继续",
+  "text.autoconfig.kiautopatch.autoUpdate":   "自动更新资源包",
+  "text.autoconfig.kiautopatch.autoUpdate.@Tooltip": "选择是否启动游戏时自动更新资源包"
 }

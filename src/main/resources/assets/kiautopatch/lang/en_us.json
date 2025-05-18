@@ -1,6 +1,9 @@
 {
-  "text.autoconfig.kiautopatch.option.apiUrl":         "Resource API URL",
-  "text.autoconfig.kiautopatch.option.apiUrl.@Tooltip": "The endpoint used to fetch the latest resource list",
-  "text.autoconfig.kiautopatch.option.eulaAccepted":   "EULA Accepted",
-  "text.autoconfig.kiautopatch.option.eulaAccepted.@Tooltip": "You must read and agree to the End User License Agreement before proceeding"
+  "text.autoconfig.kiautopatch.title": "KiAutoPatch Settings Page",
+  "text.autoconfig.kiautopatch.urlOption": "Resource API Endpoint",
+  "text.autoconfig.kiautopatch.urlOption.@Tooltip": "The API endpoint used to fetch the latest resource list",
+  "text.autoconfig.kiautopatch.eulaAccepted": "EULA Agreement Accepted",
+  "text.autoconfig.kiautopatch.eulaAccepted.@Tooltip": "You must read and agree to the End User License Agreement before proceeding",
+  "text.autoconfig.kiautopatch.autoUpdate": "Auto Update Resource Pack",
+  "text.autoconfig.kiautopatch.autoUpdate.@Tooltip": "Choose whether to automatically update the resource pack on game launch"
 }

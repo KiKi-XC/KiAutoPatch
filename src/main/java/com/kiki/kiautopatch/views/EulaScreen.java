@@ -1,6 +1,6 @@
 package com.kiki.kiautopatch.views;
 
-import com.kiki.kiautopatch.config.ConfigUtils;
+import com.kiki.kiautopatch.config.ModConfigUtils;
 import com.kiki.kiautopatch.config.ModConfig;
 import com.kiki.kiautopatch.services.ResourceService;
 import net.fabricmc.api.EnvType;
@@ -29,9 +29,9 @@ public class EulaScreen extends Screen {
         int yBase   = this.height / 2;
 
         this.addDrawableChild(ButtonWidget.builder(Text.of("同意"), btn -> {
-            ModConfig cfg = ConfigUtils.get();
+            ModConfig cfg = ModConfigUtils.get();
             cfg.eulaAccepted = true;
-            ConfigUtils.save();
+            ModConfigUtils.save();
             MinecraftClient.getInstance().setScreen(parent);
             ResourceService.checkAndUpdate(MinecraftClient.getInstance());
         }).dimensions(xCenter - btnW - 5, yBase + 40, btnW, btnH).build());
