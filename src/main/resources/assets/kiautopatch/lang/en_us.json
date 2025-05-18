@@ -1,0 +1,6 @@
+{
+  "text.autoconfig.kiautopatch.option.apiUrl":         "Resource API URL",
+  "text.autoconfig.kiautopatch.option.apiUrl.@Tooltip": "The endpoint used to fetch the latest resource list",
+  "text.autoconfig.kiautopatch.option.eulaAccepted":   "EULA Accepted",
+  "text.autoconfig.kiautopatch.option.eulaAccepted.@Tooltip": "You must read and agree to the End User License Agreement before proceeding"
+}

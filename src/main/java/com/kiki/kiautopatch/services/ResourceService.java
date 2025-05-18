@@ -2,6 +2,8 @@ package com.kiki.kiautopatch.services;
 
 import com.google.gson.*;
 import com.kiki.kiautopatch.KiAutoPatch;
+import com.kiki.kiautopatch.config.ConfigUtils;
+import com.kiki.kiautopatch.config.ModConfig;
 import com.kiki.kiautopatch.utils.HttpUtil;
 import com.kiki.kiautopatch.utils.KiAutoPatchLogger;
 import net.fabricmc.loader.api.FabricLoader;
@@ -18,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ResourceService {
-    private static final String apiUrl = KiAutoPatch.config.apiUrl;
+    static ModConfig cfg = ConfigUtils.get();
 
     private static boolean hasChecked = false;
 
@@ -28,12 +30,10 @@ public class ResourceService {
         hasChecked = true;
 
         Path packDir = FabricLoader.getInstance().getGameDir().resolve("resourcepacks");
-        if (KiAutoPatch.config.eulaAccepted  ){
 
-        }
         try {
             KiAutoPatchLogger.info("[KiAutoPatch] 开始检查更新");
-            String json = HttpUtil.getString(apiUrl);
+            String json = HttpUtil.getString(cfg.apiUrl);
             JsonObject rootObj = JsonParser.parseString(json).getAsJsonObject();
 
             if (!"OK".equals(rootObj.get("status").getAsString())) {

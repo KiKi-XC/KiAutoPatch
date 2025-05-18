@@ -1,0 +1,6 @@
+{
+  "text.autoconfig.kiautopatch.option.apiUrl":         "资源接口地址",
+  "text.autoconfig.kiautopatch.option.apiUrl.@Tooltip": "用于拉取最新资源列表的接口地址",
+  "text.autoconfig.kiautopatch.option.eulaAccepted":   "已接受 EULA 协议",
+  "text.autoconfig.kiautopatch.option.eulaAccepted.@Tooltip": "阅读并同意最终用户许可协议后才能继续"
+}

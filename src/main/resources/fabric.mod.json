@@ -19,13 +19,17 @@
 	"entrypoints": {
 		"client": [
 			"com.kiki.kiautopatch.KiAutoPatch"
+		],
+		"modmenu": [
+			"com.kiki.kiautopatch.config.ModMenuIntegration"
 		]
 	},
 	"depends": {
 		"fabricloader": ">=0.15.0",
 		"minecraft": "~1.21",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"modmenu": "*"
 	},
 	"suggests": {
 		"another-mod": "*"

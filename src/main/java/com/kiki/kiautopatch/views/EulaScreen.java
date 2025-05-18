@@ -1,6 +1,6 @@
 package com.kiki.kiautopatch.views;
 
-import com.kiki.kiautopatch.KiAutoPatch;
+import com.kiki.kiautopatch.config.ConfigUtils;
 import com.kiki.kiautopatch.config.ModConfig;
 import com.kiki.kiautopatch.services.ResourceService;
 import net.fabricmc.api.EnvType;
@@ -10,6 +10,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
+
 
 @Environment(EnvType.CLIENT)
 public class EulaScreen extends Screen {
@@ -28,9 +29,9 @@ public class EulaScreen extends Screen {
         int yBase   = this.height / 2;
 
         this.addDrawableChild(ButtonWidget.builder(Text.of("同意"), btn -> {
-            ModConfig cfg = KiAutoPatch.config;
+            ModConfig cfg = ConfigUtils.get();
             cfg.eulaAccepted = true;
-            cfg.save();
+            ConfigUtils.save();
             MinecraftClient.getInstance().setScreen(parent);
             ResourceService.checkAndUpdate(MinecraftClient.getInstance());
         }).dimensions(xCenter - btnW - 5, yBase + 40, btnW, btnH).build());
@@ -52,12 +53,12 @@ public class EulaScreen extends Screen {
         int w1 = this.textRenderer.getWidth(line1);
         int x1 = (this.width - w1) / 2;
         int y1 = this.height / 2 - 30;  // 适当上移，给三行留空间
-        context.drawText(this.textRenderer, line1, x1, y1, 0xFF8181, true);
+        context.drawText(this.textRenderer, line1, x1, y1, 0xFFFFFF, true);
 
         int w2 = this.textRenderer.getWidth(line2);
         int x2 = (this.width - w2) / 2;
         int y2 = this.height / 2 - 10;
-        context.drawText(this.textRenderer, line2, x2, y2, 0xFF8181, true);
+        context.drawText(this.textRenderer, line2, x2, y2, 0xFFFFFF, true);
 
         int w3 = this.textRenderer.getWidth(line3);
         int x3 = (this.width - w3) / 2;
