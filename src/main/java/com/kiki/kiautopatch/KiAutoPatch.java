@@ -1,7 +1,7 @@
 package com.kiki.kiautopatch;
 
-import com.kiki.kiautopatch.config.ModConfigUtils;
 import com.kiki.kiautopatch.config.ModConfig;
+import com.kiki.kiautopatch.config.ModConfigUtils;
 import com.kiki.kiautopatch.services.ResourceService;
 import com.kiki.kiautopatch.views.EulaScreen;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -23,7 +23,7 @@ public class KiAutoPatch implements ClientModInitializer {
 				if (cfg.autoUpdate){
 					ResourceService.checkAndUpdate(client);
 				}
-			}
+            }
 		});
     }
 }
